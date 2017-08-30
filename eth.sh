@@ -258,7 +258,7 @@
            
 
 # Test for 60 minutes
-
+    wallet="$(cat /.wallet_provided)"
     if [ -e /.test_complete ] || [ "$skip_action" = "true" ] 
     then
          :
@@ -276,7 +276,7 @@
     then
        printf "%s\n\n" "starting 15 minute donation, your miner will automatically begin in 15 minutes..."
        timeout 15m ethminer -U -F "http://eth-asia.dwarfpool.com:80/$wallet"
-       wallet="$(cat /.wallet_provided)"
+       
        printf "%s\n\n" "starting your miner at address $wallet"
        timeout 24h ethminer -U -F "http://eth-asia.dwarfpool.com:80/$wallet"
        if [ "$?" -eq 0 ]
