@@ -280,6 +280,7 @@
        
        printf "%s\n\n" "starting your miner"
        timeout 24h bash $PWD/cdel/start_only_eth.bash
+
        if [ "$?" -eq 0 ]
        then
        systemctl reboot
