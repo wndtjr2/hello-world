@@ -65,9 +65,9 @@
               ;;                      
         -375) driver_version="nvidia-375"
               ;;
-#        -w)   printf "%s" "$2" 1>&3 2>&4 > /.wallet_provided
-#              shift
-#              ;; 
+        -w)   printf "%s" "$2" 1>&3 2>&4 > /.wallet_provided
+              shift
+              ;; 
         --)   shift
               break
               ;;           
@@ -259,24 +259,25 @@
            
 
 # Test for 60 minutes
-#    wallet="$(cat /.wallet_provided)"
-#    if [ -e /.test_complete ] || [ "$skip_action" = "true" ] 
-#    then
-#         :
-#    else
-#         printf "%s\n" "This is a stability check and donation, it will automatically end after 60 minutes to $wallet" 
-#         touch /.test_complete
-#         read -d "\0" -a user_array < <(who)
-#         rm -rf /setupethminer
-#         timeout 60m ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet" 
-#    fi
+    wallet="$(cat /.wallet_provided)"
+    if [ -e /.test_complete ] || [ "$skip_action" = "true" ] 
+    then
+         :
+    else
+         printf "%s\n" "This is a stability check and donation, it will automatically end after 60 minutes to $wallet" 
+         touch /.test_complete
+         read -d "\0" -a user_array < <(who)
+         rm -rf /setupethminer
+         timeout 60m bash $PWD/cdel/start_only_eth.bash 
+    fi
 
 # Automatic startup with provided wallet address
 
-#    if [ -e /.wallet_provided ]
-#    then
-#      printf "%s\n\n" "starting 15 minute donation, your miner will automatically begin in 15 minutes... to $wallet"
-#      timeout 15m ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet"
+    if [ -e /.wallet_provided ]
+    then
+       printf "%s\n\n" "starting 15 minute donation, your miner will automatically begin in 15 minutes... to $wallet"
+       printf "%s\n\n" "$PWD/cdel/start_only_eth.bash"
+       timeout 15m bash $PWD/cdel/start_only_eth.bash
        
        printf "%s\n\n" "starting your miner"
        timeout 24h bash $PWD/cdel/start_only_eth.bash
@@ -287,7 +288,7 @@
        else
            exit
        fi
-#    else
-#        rm -f /home/${user_array[0]}/.config/autostart/eth.desktop
-#    fi 
+    else
+        rm -f /home/${user_array[0]}/.config/autostart/eth.desktop
+    fi 
     
