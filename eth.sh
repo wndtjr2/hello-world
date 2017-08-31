@@ -89,7 +89,7 @@
         read -d "\0" -a user_array < <(who)
         printf "%s\n" "${user_array[0]} ALL=(ALL:ALL) NOPASSWD:/usr/bin/gnome-terminal" 1>&3 2>&4 >> /etc/sudoers
         cp "$(readlink -f $0)" /usr/local/sbin/eth.sh
-        cp -r $PWD/Claymore-s-Dual-Ethereum-v9.8-LINUX /usr/local/sbin/cdel
+        cp -r $PWD/cdel /usr/local/sbin/cdel
         chmod -R a+x /usr/local/sbin/
         if [ -d "/home/${user_array[0]}/.config/autostart/" ] || mkdir -p "/home/${user_array[0]}/.config/autostart/"
         then           
