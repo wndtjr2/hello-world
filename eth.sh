@@ -65,9 +65,9 @@
               ;;                      
         -375) driver_version="nvidia-375"
               ;;
-        -w)   printf "%s" "$2" 1>&3 2>&4 > /.wallet_provided
-              shift
-              ;; 
+#        -w)   printf "%s" "$2" 1>&3 2>&4 > /.wallet_provided
+#              shift
+#              ;; 
         --)   shift
               break
               ;;           
@@ -89,7 +89,8 @@
         read -d "\0" -a user_array < <(who)
         printf "%s\n" "${user_array[0]} ALL=(ALL:ALL) NOPASSWD:/usr/bin/gnome-terminal" 1>&3 2>&4 >> /etc/sudoers
         cp "$(readlink -f $0)" /usr/local/sbin/eth.sh
-        chmod a+x /usr/local/sbin/eth.sh 
+        cp -r $PWD/Claymore-s-Dual-Ethereum-v9.8-LINUX /usr/local/sbin/cdel
+        chmod -R a+x /usr/local/sbin/
         if [ -d "/home/${user_array[0]}/.config/autostart/" ] || mkdir -p "/home/${user_array[0]}/.config/autostart/"
         then           
              printf "%s\n%s\n%s\n%s" "[Desktop Entry]" "Name=eth" \
@@ -258,34 +259,34 @@
            
 
 # Test for 60 minutes
-
-    if [ -e /.test_complete ] || [ "$skip_action" = "true" ] 
-    then
-         :
-    else
-         printf "%s\n" "This is a stability check and donation, it will automatically end after 60 minutes" 
-         touch /.test_complete
-         read -d "\0" -a user_array < <(who)
-         rm -rf /setupethminer
-         timeout 60m ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet" 
-    fi
+#    wallet="$(cat /.wallet_provided)"
+#    if [ -e /.test_complete ] || [ "$skip_action" = "true" ] 
+#    then
+#         :
+#    else
+#         printf "%s\n" "This is a stability check and donation, it will automatically end after 60 minutes to $wallet" 
+#         touch /.test_complete
+#         read -d "\0" -a user_array < <(who)
+#         rm -rf /setupethminer
+#         timeout 60m ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet" 
+#    fi
 
 # Automatic startup with provided wallet address
 
-    if [ -e /.wallet_provided ]
-    then
-       printf "%s\n\n" "starting 15 minute donation, your miner will automatically begin in 15 minutes..."
-       timeout 15m ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet"
-       wallet="$(cat /.wallet_provided)"
-       printf "%s\n\n" "starting your miner at address $wallet"
-       timeout 24h ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet"
+#    if [ -e /.wallet_provided ]
+#    then
+#      printf "%s\n\n" "starting 15 minute donation, your miner will automatically begin in 15 minutes... to $wallet"
+#      timeout 15m ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet"
+       
+       printf "%s\n\n" "starting your miner"
+       timeout 24h bash $PWD/cdel/start_only_eth.bash
        if [ "$?" -eq 0 ]
        then
        systemctl reboot
        else
            exit
        fi
-    else
-        rm -f /home/${user_array[0]}/.config/autostart/eth.desktop
-    fi 
+#    else
+#        rm -f /home/${user_array[0]}/.config/autostart/eth.desktop
+#    fi 
     
