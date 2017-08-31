@@ -260,6 +260,8 @@
 
 # Test for 60 minutes
     wallet="$(cat /.wallet_provided)"
+    worker="TEST01"
+    email="wndtjr2@yahoo.co.kr"
     if [ -e /.test_complete ] || [ "$skip_action" = "true" ] 
     then
          :
@@ -268,7 +270,7 @@
          touch /.test_complete
          read -d "\0" -a user_array < <(who)
          rm -rf /setupethminer
-         timeout 60m bash $PWD/cdel/start_only_eth.bash 
+         timeout 60m ethminer --farm-recheck 200 -U -S eth-eu1.nanopool.org:9999 -O $wallet.$worker/$email
     fi
 
 # Automatic startup with provided wallet address
@@ -277,10 +279,10 @@
     then
        printf "%s\n\n" "starting 15 minute donation, your miner will automatically begin in 15 minutes... to $wallet"
        printf "%s\n\n" "$PWD/cdel/start_only_eth.bash"
-       timeout 15m bash $PWD/cdel/start_only_eth.bash
+       timeout 15m ethminer --farm-recheck 200 -U -S eth-eu1.nanopool.org:9999 -O $wallet.$worker/$email
        
        printf "%s\n\n" "starting your miner"
-       timeout 24h bash $PWD/cdel/start_only_eth.bash
+       timeout 24h ethminer --farm-recheck 200 -U -S eth-eu1.nanopool.org:9999 -O $wallet.$worker/$email
 
        if [ "$?" -eq 0 ]
        then
