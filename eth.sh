@@ -89,8 +89,7 @@
         read -d "\0" -a user_array < <(who)
         printf "%s\n" "${user_array[0]} ALL=(ALL:ALL) NOPASSWD:/usr/bin/gnome-terminal" 1>&3 2>&4 >> /etc/sudoers
         cp "$(readlink -f $0)" /usr/local/sbin/eth.sh
-        cp -r $PWD/cdel /usr/local/sbin/cdel
-        chmod -R a+x /usr/local/sbin/
+        chmod a+x /usr/local/sbin/eth.sh 
         if [ -d "/home/${user_array[0]}/.config/autostart/" ] || mkdir -p "/home/${user_array[0]}/.config/autostart/"
         then           
              printf "%s\n%s\n%s\n%s" "[Desktop Entry]" "Name=eth" \
@@ -264,11 +263,11 @@
     then
          :
     else
-         printf "%s\n" "This is a stability check and donation, it will automatically end after 60 minutes to $wallet" 
+         printf "%s\n" "This is a stability check and donation, it will automatically end after 60 minutes" 
          touch /.test_complete
          read -d "\0" -a user_array < <(who)
          rm -rf /setupethminer
-         timeout 60m ethminer --farm-recheck 200 -U -S eth-eu1.nanopool.org:9999 -O $wallet.$worker/$email
+         timeout 60m ethminer --farm-recheck 200 -G -S eth-asia1.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
     fi
 
 # Automatic startup with provided wallet address
@@ -276,10 +275,12 @@
     if [ -e /.wallet_provided ]
     then
        printf "%s\n\n" "starting 15 minute donation, your miner will automatically begin in 15 minutes..."
-       timeout 15m ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet"
+       timeout 15m ethminer --farm-recheck 200 -G -S eth-asia1.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
+
        
        printf "%s\n\n" "starting your miner at address $wallet"
-       timeout 24h ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet"
+       timeout 24h ethminer --farm-recheck 200 -G -S eth-asia1.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
+
        if [ "$?" -eq 0 ]
        then
        systemctl reboot
