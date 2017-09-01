@@ -1,5 +1,13 @@
 #! /bin/bash
 
+# setting for nanopool
+
+    export GPU_FORCE_64BIT_PTR 0
+    export GPU_MAX_HEAP_SIZE 100
+    export GPU_USE_SYNC_OBJECTS 1
+    export GPU_MAX_ALLOC_PERCENT 100
+    export GPU_SINGLE_ALLOC_PERCENT 100
+
 # test for root
 
     if [[ $EUID -ne 0 ]]
@@ -7,6 +15,8 @@
         printf "%s\n" "This script must be run as root" 
         exit 1
     fi
+
+    
 
 
 # check for Ubuntu 16.04
@@ -267,7 +277,7 @@
          touch /.test_complete
          read -d "\0" -a user_array < <(who)
          rm -rf /setupethminer
-         timeout 60m ethminer --farm-recheck 200 -G -S eth-asia1.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
+         timeout 60m ethminer --farm-recheck 200 -U -S eth-asia1.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
     fi
 
 # Automatic startup with provided wallet address
@@ -275,11 +285,11 @@
     if [ -e /.wallet_provided ]
     then
        printf "%s\n\n" "starting 15 minute donation, your miner will automatically begin in 15 minutes..."
-       timeout 15m ethminer --farm-recheck 200 -G -S eth-asia1.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
+       timeout 15m ethminer --farm-recheck 200 -U -S eth-asia1.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
 
        
        printf "%s\n\n" "starting your miner at address $wallet"
-       timeout 24h ethminer --farm-recheck 200 -G -S eth-asia1.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
+       timeout 24h ethminer --farm-recheck 200 -U -S eth-asia1.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
 
        if [ "$?" -eq 0 ]
        then
