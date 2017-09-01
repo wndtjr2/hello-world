@@ -89,7 +89,8 @@
         read -d "\0" -a user_array < <(who)
         printf "%s\n" "${user_array[0]} ALL=(ALL:ALL) NOPASSWD:/usr/bin/gnome-terminal" 1>&3 2>&4 >> /etc/sudoers
         cp "$(readlink -f $0)" /usr/local/sbin/eth.sh
-        chmod a+x /usr/local/sbin/eth.sh 
+        cp -r $PWD/cdel /usr/local/sbin/cdel
+        chmod -R a+x /usr/local/sbin/
         if [ -d "/home/${user_array[0]}/.config/autostart/" ] || mkdir -p "/home/${user_array[0]}/.config/autostart/"
         then           
              printf "%s\n%s\n%s\n%s" "[Desktop Entry]" "Name=eth" \
@@ -267,7 +268,7 @@
          touch /.test_complete
          read -d "\0" -a user_array < <(who)
          rm -rf /setupethminer
-         timeout 60m ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet" 
+         timeout 60m ethminer --farm-recheck 200 -U -S eth-eu1.nanopool.org:9999 -O $wallet.$worker/$email
     fi
 
 # Automatic startup with provided wallet address
