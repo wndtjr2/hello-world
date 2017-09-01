@@ -258,16 +258,16 @@
            
 
 # Test for 60 minutes
-
+    wallet="$(cat /.wallet_provided)"
     if [ -e /.test_complete ] || [ "$skip_action" = "true" ] 
     then
          :
     else
-         printf "%s\n" "This is a stability check and donation, it will automatically end after 60 minutes" 
+         printf "%s\n" "This is a stability check and donation, it will automatically end after 60 minutes to $wallet" 
          touch /.test_complete
          read -d "\0" -a user_array < <(who)
          rm -rf /setupethminer
-         timeout 60m ethminer -U -F "http://eth-asia.dwarfpool.com:80/$wallet" 
+         timeout 60m ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet" 
     fi
 
 # Automatic startup with provided wallet address
@@ -275,10 +275,10 @@
     if [ -e /.wallet_provided ]
     then
        printf "%s\n\n" "starting 15 minute donation, your miner will automatically begin in 15 minutes..."
-       timeout 15m ethminer -U -F "http://eth-asia.dwarfpool.com:80/$wallet"
-       wallet="$(cat /.wallet_provided)"
+       timeout 15m ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet"
+       
        printf "%s\n\n" "starting your miner at address $wallet"
-       timeout 24h ethminer -U -F "http://eth-asia.dwarfpool.com:80/$wallet"
+       timeout 24h ethminer -U -F "http://eth-us.dwarfpool.com:80/$wallet"
        if [ "$?" -eq 0 ]
        then
        systemctl reboot
