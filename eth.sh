@@ -139,8 +139,8 @@
         cd /setupethminer
         wget "http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb" 
         dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb 
-        wget "https://github.com/ethereum-mining/ethminer/releases/download/v0.11.0rc1/ethminer-0.11.0rc1-Linux.tar.gz" 
-        tar -xvzf ethminer-0.11.0rc1-Linux.tar.gz 
+        wget "https://github.com/ethereum-mining/ethminer/releases/download/v0.11.0/ethminer-0.11.0-Linux.tar.gz" 
+        tar -xvzf ethminer-0.11.0-Linux.tar.gz 
         apt-get update 
         printf "%s\n" "Done..." 1>&3 2>&4
         touch /.materials_complete 
