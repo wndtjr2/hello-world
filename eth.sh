@@ -242,10 +242,10 @@
            nvidia-smi -i $i -pm 1
            printf "%s\n" "setting power limit to 75 watts.."
            nvidia-smi -i $i -pl 75
-           printf "%s\n" "setting memory overclock of 900 Mhz..."
+           printf "%s\n" "setting memory overclock of 800 Mhz..."
            nvidia-settings -a [gpu:${i}]/GPUPowerMizerMode=1
            nvidia-settings -a [gpu:${i}]/GPUGraphicsClockOffset[3]=200
-           nvidia-settings -a [gpu:${i}]/GPUMemoryTransferRateOffset[3]=900
+           nvidia-settings -a [gpu:${i}]/GPUMemoryTransferRateOffset[3]=800
        elif nvidia-smi -i $i --query-gpu=name --format=csv,noheader,nounits | grep -E "1070" 1> /dev/null
        then 
            printf "%s\n" "found GeForce GTX 1070 at index $i..."
@@ -254,6 +254,8 @@
            printf "%s\n" "setting power limit to 95 watts.."
            nvidia-smi -i $i -pl 95
            printf "%s\n" "setting memory overclock of 500 Mhz..."
+           nvidia-settings -a [gpu:${i}]/GPUPowerMizerMode=1
+           nvidia-settings -a [gpu:${i}]/GPUGraphicsClockOffset[3]=200
            nvidia-settings -a [gpu:${i}]/GPUMemoryTransferRateOffset[3]=500
        fi 
     done
