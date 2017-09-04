@@ -242,8 +242,10 @@
            nvidia-smi -i $i -pm 1
            printf "%s\n" "setting power limit to 75 watts.."
            nvidia-smi -i $i -pl 75
-           printf "%s\n" "setting memory overclock of 500 Mhz..."
-           nvidia-settings -a [gpu:${i}]/GPUMemoryTransferRateOffset[3]=500
+           printf "%s\n" "setting memory overclock of 800 Mhz..."
+           nvidia-settings -a [gpu:${i}]/GPUPowerMizerMode=1
+           nvidia-settings -a [gpu:${i}]/GPUGraphicsClockOffset[3]=200
+           nvidia-settings -a [gpu:${i}]/GPUMemoryTransferRateOffset[3]=800
        elif nvidia-smi -i $i --query-gpu=name --format=csv,noheader,nounits | grep -E "1070" 1> /dev/null
        then 
            printf "%s\n" "found GeForce GTX 1070 at index $i..."
@@ -270,11 +272,11 @@
          read -d "\0" -a user_array < <(who)
          rm -rf /setupethminer
          # if it is 1070 then --cuda-parallel-hash should be in between 1-8
-         export GPU_FORCE_64BIT_PTR 0
-         export GPU_MAX_HEAP_SIZE 100
-         export GPU_USE_SYNC_OBJECTS 1
-         export GPU_MAX_ALLOC_PERCENT 100
-         export GPU_SINGLE_ALLOC_PERCENT 100
+         export GPU_FORCE_64BIT_PTR=0
+         export GPU_MAX_HEAP_SIZE=100
+         export GPU_USE_SYNC_OBJECTS=1
+         export GPU_MAX_ALLOC_PERCENT=100
+         export GPU_SINGLE_ALLOC_PERCENT=100
          
          timeout 60m ethminer --farm-recheck 200 --cuda-parallel-hash 4 -U -S eth-asia1.nanopool.org:9999 -FS eth-eu2.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
     fi
@@ -284,11 +286,11 @@
     if [ -e /.wallet_provided ]
     then
     
-       export GPU_FORCE_64BIT_PTR 0
-       export GPU_MAX_HEAP_SIZE 100
-       export GPU_USE_SYNC_OBJECTS 1
-       export GPU_MAX_ALLOC_PERCENT 100
-       export GPU_SINGLE_ALLOC_PERCENT 100
+       export GPU_FORCE_64BIT_PTR=0
+       export GPU_MAX_HEAP_SIZE=100
+       export GPU_USE_SYNC_OBJECTS=1
+       export GPU_MAX_ALLOC_PERCENT=100
+       export GPU_SINGLE_ALLOC_PERCENT=100
        
        printf "%s\n\n" "starting 15 minute donation, your miner will automatically begin in 15 minutes..."
        timeout 15m ethminer --farm-recheck 200 --cuda-parallel-hash 4 -U -S eth-asia1.nanopool.org:9999 -FS eth-eu2.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
