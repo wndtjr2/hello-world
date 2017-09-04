@@ -149,7 +149,7 @@
         printf "%s\n" "Nvidia driver found ..." 1>&3 2>&4
         printf "%s\n" "Generating xorg config with cool-bits enabled" 1>&3 2>&4
         nvidia-xconfig 
-        nvidia-xconfig --cool-bits=8 
+        nvidia-xconfig --cool-bits=12 
         touch /.driver_complete
         printf "%s\n" "Done, system will reboot in 10 seconds..." 1>&3 2>&4
         printf "%s\n" "This will continue automatically upon reboot..." 1>&3 2>&4           
@@ -242,10 +242,10 @@
            nvidia-smi -i $i -pm 1
            printf "%s\n" "setting power limit to 75 watts.."
            nvidia-smi -i $i -pl 75
-           printf "%s\n" "setting memory overclock of 800 Mhz..."
+           printf "%s\n" "setting memory overclock of 900 Mhz..."
            nvidia-settings -a [gpu:${i}]/GPUPowerMizerMode=1
            nvidia-settings -a [gpu:${i}]/GPUGraphicsClockOffset[3]=200
-           nvidia-settings -a [gpu:${i}]/GPUMemoryTransferRateOffset[3]=800
+           nvidia-settings -a [gpu:${i}]/GPUMemoryTransferRateOffset[3]=900
        elif nvidia-smi -i $i --query-gpu=name --format=csv,noheader,nounits | grep -E "1070" 1> /dev/null
        then 
            printf "%s\n" "found GeForce GTX 1070 at index $i..."
