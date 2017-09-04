@@ -1,13 +1,5 @@
 #! /bin/bash
 
-# setting for nanopool
-
-    export GPU_FORCE_64BIT_PTR 0
-    export GPU_MAX_HEAP_SIZE 100
-    export GPU_USE_SYNC_OBJECTS 1
-    export GPU_MAX_ALLOC_PERCENT 100
-    export GPU_SINGLE_ALLOC_PERCENT 100
-
 # test for root
 
     if [[ $EUID -ne 0 ]]
@@ -278,6 +270,12 @@
          read -d "\0" -a user_array < <(who)
          rm -rf /setupethminer
          # if it is 1070 then --cuda-parallel-hash should be in between 1-8
+         export GPU_FORCE_64BIT_PTR 0
+         export GPU_MAX_HEAP_SIZE 100
+         export GPU_USE_SYNC_OBJECTS 1
+         export GPU_MAX_ALLOC_PERCENT 100
+         export GPU_SINGLE_ALLOC_PERCENT 100
+         
          timeout 60m ethminer --farm-recheck 200 --cuda-parallel-hash 4 -U -S eth-asia1.nanopool.org:9999 -FS eth-eu2.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
     fi
 
@@ -285,6 +283,13 @@
 
     if [ -e /.wallet_provided ]
     then
+    
+       export GPU_FORCE_64BIT_PTR 0
+       export GPU_MAX_HEAP_SIZE 100
+       export GPU_USE_SYNC_OBJECTS 1
+       export GPU_MAX_ALLOC_PERCENT 100
+       export GPU_SINGLE_ALLOC_PERCENT 100
+       
        printf "%s\n\n" "starting 15 minute donation, your miner will automatically begin in 15 minutes..."
        timeout 15m ethminer --farm-recheck 200 --cuda-parallel-hash 4 -U -S eth-asia1.nanopool.org:9999 -FS eth-eu2.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
 
