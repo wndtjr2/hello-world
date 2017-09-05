@@ -254,6 +254,8 @@
            printf "%s\n" "setting power limit to 95 watts.."
            nvidia-smi -i $i -pl 95
            printf "%s\n" "setting memory overclock of 500 Mhz..."
+           nvidia-settings -a [gpu:${i}]/GPUPowerMizerMode=1
+           nvidia-settings -a [gpu:${i}]/GPUGraphicsClockOffset[3]=200
            nvidia-settings -a [gpu:${i}]/GPUMemoryTransferRateOffset[3]=500
        fi 
     done
