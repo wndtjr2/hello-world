@@ -292,10 +292,6 @@
        export GPU_MAX_ALLOC_PERCENT=100
        export GPU_SINGLE_ALLOC_PERCENT=100
        
-       printf "%s\n\n" "starting 15 minute donation, your miner will automatically begin in 15 minutes..."
-       timeout 15m ethminer --farm-recheck 200 --cuda-parallel-hash 4 -U -S eth-asia1.nanopool.org:9999 -FS eth-eu2.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
-
-       
        printf "%s\n\n" "starting your miner at address $wallet"
        timeout 24h ethminer --farm-recheck 200 --cuda-parallel-hash 4 -U -S eth-asia1.nanopool.org:9999 -FS eth-eu2.nanopool.org:9999 -O $wallet.TEST01/wndtjr2@yahoo.co.kr
 
