@@ -131,8 +131,8 @@
         cd /setupethminer
         wget "http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_8.0.61-1_amd64.deb" 
         dpkg -i cuda-repo-ubuntu1604_8.0.61-1_amd64.deb 
-        wget "https://github.com/ethereum-mining/ethminer/releases/download/v0.11.0/ethminer-0.11.0-Linux.tar.gz" 
-        tar -xvzf ethminer-0.11.0-Linux.tar.gz 
+        wget -O ethminer.tar.gz "https://github.com/ethereum-mining/ethminer/releases/download/v0.12.0rc1/ethminer-0.12.0rc1-Linux.tar.gz" 
+        tar -xvzf ethminer.tar.gz 
         apt-get update 
         printf "%s\n" "Done..." 1>&3 2>&4
         touch /.materials_complete 
@@ -241,11 +241,11 @@
            printf "%s\n" "setting persistence mode..."
            nvidia-smi -i $i -pm 1
            printf "%s\n" "setting power limit to 75 watts.."
-           nvidia-smi -i $i -pl 75
-           printf "%s\n" "setting memory overclock of 800 Mhz..."
+           nvidia-smi -i $i -pl 80
+           printf "%s\n" "setting memory overclock of 750 Mhz..."
            nvidia-settings -a [gpu:${i}]/GPUPowerMizerMode=1
            nvidia-settings -a [gpu:${i}]/GPUGraphicsClockOffset[3]=200
-           nvidia-settings -a [gpu:${i}]/GPUMemoryTransferRateOffset[3]=800
+           nvidia-settings -a [gpu:${i}]/GPUMemoryTransferRateOffset[3]=750
        elif nvidia-smi -i $i --query-gpu=name --format=csv,noheader,nounits | grep -E "1070" 1> /dev/null
        then 
            printf "%s\n" "found GeForce GTX 1070 at index $i..."
@@ -254,8 +254,6 @@
            printf "%s\n" "setting power limit to 95 watts.."
            nvidia-smi -i $i -pl 95
            printf "%s\n" "setting memory overclock of 500 Mhz..."
-           nvidia-settings -a [gpu:${i}]/GPUPowerMizerMode=1
-           nvidia-settings -a [gpu:${i}]/GPUGraphicsClockOffset[3]=200
            nvidia-settings -a [gpu:${i}]/GPUMemoryTransferRateOffset[3]=500
        fi 
     done
